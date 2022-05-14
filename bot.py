@@ -11,8 +11,6 @@ from secrets import CLIENT_SECRET
 app = Client(**CLIENT_SECRET)
 
 
-
-
 @app.on_message(filters.text & (~filters.me))
 def reply_message(_, msg: Message):
     msg.reply_text(f"Вбийте в поле відповіді 42!")
