@@ -1,6 +1,6 @@
 
-from pyrogram import Client, filters
-from pyrogram.types import Message, Sticker
+from pyrogram import Client
+from pyrogram.types import Message
 
 from secrets import CLIENT_SECRET
 
