@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import datetime
+import os.path
 import pickle
 import typing
 import math
@@ -15,6 +16,8 @@ from secrets import USER_TO_ACCOUNT_ID, MONO_API_KEY, ACCOUNT_CACHE_TIME_SECONDS
 __all__ = [
     "MonoHelper",
 ]
+
+DATA_DIR = os.path.abspath(os.path.join(__file__, '..', 'data'))
 
 
 @dataclasses.dataclass
@@ -54,7 +57,7 @@ class AccountStatus:
         return inst
 
     def to_file(self) -> None:
-        fn = f'data/user_info.pcl'
+        fn = os.path.join(DATA_DIR, 'user_info.pcl')
         with open(fn, 'wb') as f:
             pickle.dump(self, f)
         return None
@@ -62,7 +65,7 @@ class AccountStatus:
     @classmethod
     def from_api_cached(cls) -> AccountStatus:
         try:
-            fn = f'data/user_info.pcl'
+            fn = os.path.join(DATA_DIR, 'user_info.pcl')
             with open(fn, 'rb') as f:
                 acc_status: AccountStatus = pickle.load(f)
             acc_status.raise_if_stale()
@@ -89,7 +92,8 @@ class CurrencyRate:
     requested_at: datetime.datetime
 
     def to_file(self) -> None:
-        with open("data/currency_conv.pcl", 'wb') as f:
+        fn = os.path.join(DATA_DIR, 'currency_conv.pcl')
+        with open(fn, 'wb') as f:
             pickle.dump(self, f)
         return None
 
@@ -116,7 +120,8 @@ class CurrencyRate:
 
     @staticmethod
     def from_file() -> CurrencyRate:
-        with open("data/currency_conv.pcl", 'rb') as f:
+        fn = os.path.join(DATA_DIR, 'currency_conv.pcl')
+        with open(fn, 'rb') as f:
             inst: CurrencyRate = pickle.load(f)
         if inst.requested_at.date() < datetime.date.today():
             raise StaleError()
