@@ -40,7 +40,9 @@ def pause_game_dl_video(insta_reel_url: str) -> typing.Optional[str]:
 
     querystring = {"url": reel_url}
 
-    response = requests.get(DOWNLOADER_URL, headers=bot_secrets.INSTA_REEL_HEADERS, params=querystring)
+    response = requests.get(
+        DOWNLOADER_URL, headers=bot_secrets.INSTA_REEL_HEADERS, params=querystring
+    )
     if not (200 <= response.status_code < 300):
         return None
 
@@ -54,7 +56,14 @@ def pause_game_dl_video(insta_reel_url: str) -> typing.Optional[str]:
     if not (200 <= response.status_code < 300):
         return None
 
-    video_path = f"videos/vid_{int(datetime.datetime.utcnow().timestamp())}.mp4"
+    video_path = os.path.abspath(
+        os.path.join(
+            __file__,
+            "..",
+            "videos",
+            f"vid_{int(datetime.datetime.utcnow().timestamp())}.mp4",
+        )
+    )
 
     with open(video_path, "wb") as f:
         f.write(resp.content)
@@ -96,8 +105,12 @@ def guess_pause_frame(vid: str, top_n: int = 5) -> typing.List[str]:
 
     paths = []
     for i, (diff_index, image) in enumerate(tops):
-        fname = (
-            f"frames/{int(datetime.datetime.utcnow().timestamp())}_{len(tops) - i}.jpg"
+        fname = os.path.abspath(
+            os.path.join(
+                __file__,
+                "frames",
+                f"{int(datetime.datetime.utcnow().timestamp())}_{len(tops) - i}.jpg",
+            )
         )
         cv2.imwrite(filename=fname, img=image)  # save frame as JPEG file
         paths.append(fname)
