@@ -2,6 +2,6 @@ pyrogram
 tgcrypto
 iso4217
 monobank
-opencv-python
-numpy
+opencv-python==4.8.1.78
+numpy==1.22.3
 requests
