@@ -10,7 +10,7 @@ import math
 import monobank
 from iso4217 import Currency
 
-from secrets import USER_TO_ACCOUNT_ID, MONO_API_KEY, ACCOUNT_CACHE_TIME_SECONDS, EARN_PER_WEEK_PLN
+from bot_secrets import USER_TO_ACCOUNT_ID, MONO_API_KEY, ACCOUNT_CACHE_TIME_SECONDS, EARN_PER_WEEK_PLN
 
 
 __all__ = [

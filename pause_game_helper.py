@@ -9,7 +9,7 @@ import cv2
 import numpy as np
 import requests
 
-import secrets
+import bot_secrets
 
 INSTAGRAM_URL_RE = r"https://www\.instagram\.com/reel/([^/?]+)"
 REEL_URL_TEMPLATE = "https://www.instagram.com/reel/{reel_id}/"

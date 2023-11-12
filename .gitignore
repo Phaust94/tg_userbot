@@ -1,5 +1,5 @@
 .idea
-secrets.py
+bot_secrets.py
 *.session
 tst*.py
 .gitsecret/keys/random_seed

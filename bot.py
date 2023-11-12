@@ -4,7 +4,7 @@ from pyrogram.types import Message, InputMediaPhoto
 
 from mono_helper import MonoHelper
 import pause_game_helper
-from secrets import CLIENT_SECRET, STICKER_TO_WORD, HELLO_ID, SONG_ID, SELF_ID, USER_TO_ACCOUNT_ID
+from bot_secrets import CLIENT_SECRET, STICKER_TO_WORD, HELLO_ID, SONG_ID, SELF_ID, USER_TO_ACCOUNT_ID
 
 app = Client(**CLIENT_SECRET)
 
