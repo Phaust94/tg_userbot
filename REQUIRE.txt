@@ -2,3 +2,6 @@ pyrogram
 tgcrypto
 iso4217
 monobank
+opencv-python
+numpy
+requests
