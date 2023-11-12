@@ -40,7 +40,7 @@ def pause_game_dl_video(insta_reel_url: str) -> typing.Optional[str]:
 
     querystring = {"url": reel_url}
 
-    response = requests.get(DOWNLOADER_URL, headers=secrets.INSTA_REEL_HEADERS, params=querystring)
+    response = requests.get(DOWNLOADER_URL, headers=bot_secrets.INSTA_REEL_HEADERS, params=querystring)
     if not (200 <= response.status_code < 300):
         return None
 
