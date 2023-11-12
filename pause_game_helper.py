@@ -108,6 +108,7 @@ def guess_pause_frame(vid: str, top_n: int = 5) -> typing.List[str]:
         fname = os.path.abspath(
             os.path.join(
                 __file__,
+                "..",
                 "frames",
                 f"{int(datetime.datetime.utcnow().timestamp())}_{len(tops) - i}.jpg",
             )
