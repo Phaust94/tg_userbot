@@ -41,9 +41,11 @@ def pause_game_dl_video(insta_reel_url: str) -> typing.Optional[str]:
     dl_dir_local = os.path.join("videos", reel_id)
     dl_dir = os.path.abspath(os.path.join(__file__, "..", dl_dir_local))
 
-    instagram.download_post(
+    dl_res = instagram.download_post(
         instaloader.Post.from_shortcode(instagram.context, reel_id), dl_dir_local
     )
+    if not dl_res:
+        return None
 
     files = os.listdir(dl_dir)
     video_file = [x for x in files if x.endswith(".mp4")]
