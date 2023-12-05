@@ -36,6 +36,7 @@ def pause_game_dl_video(insta_reel_url: str) -> typing.Optional[str]:
     reel_id = reel_id_arr[0]
 
     instagram = instaloader.Instaloader()
+    print(bot_secrets.INSTA_INFO)
     instagram.load_session_from_file(**bot_secrets.INSTA_INFO)
 
     dl_dir_local = os.path.join("videos", reel_id)
