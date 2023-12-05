@@ -39,11 +39,10 @@ def pause_game_dl_video(insta_reel_url: str) -> typing.Optional[str]:
     print(bot_secrets.INSTA_INFO)
     instagram.load_session_from_file(**bot_secrets.INSTA_INFO)
 
-    dl_dir_local = os.path.join("videos", reel_id)
-    dl_dir = os.path.abspath(os.path.join(__file__, "..", dl_dir_local))
+    dl_dir = os.path.abspath(os.path.join(__file__, "..", reel_id))
 
     dl_res = instagram.download_post(
-        instaloader.Post.from_shortcode(instagram.context, reel_id), dl_dir_local
+        instaloader.Post.from_shortcode(instagram.context, reel_id), reel_id
     )
     if not dl_res:
         return None
