@@ -7,13 +7,12 @@ import bisect
 
 import cv2
 import numpy as np
-import requests
+import instaloader
 
 import bot_secrets
 
 INSTAGRAM_URL_RE = r"https://www\.instagram\.com/reel/([^/?]+)"
 REEL_URL_TEMPLATE = "https://www.instagram.com/reel/{reel_id}/"
-DOWNLOADER_URL = "https://instagram-downloader-download-instagram-videos-stories.p.rapidapi.com/index"
 
 
 __all__ = [
@@ -36,39 +35,23 @@ def pause_game_dl_video(insta_reel_url: str) -> typing.Optional[str]:
 
     reel_id = reel_id_arr[0]
 
-    reel_url = REEL_URL_TEMPLATE.format(reel_id=reel_id)
+    instagram = instaloader.Instaloader()
+    instagram.load_session_from_file(**bot_secrets.INSTA_INFO)
 
-    querystring = {"url": reel_url}
+    dl_dir_local = os.path.join("videos", reel_id)
+    dl_dir = os.path.abspath(os.path.join(__file__, "..", dl_dir_local))
 
-    response = requests.get(
-        DOWNLOADER_URL, headers=bot_secrets.INSTA_REEL_HEADERS, params=querystring
-    )
-    if not (200 <= response.status_code < 300):
-        return None
-
-    media_json = response.json()
-    is_reel_media = media_json.get("Type", "") == "Post-Video" and "media" in media_json
-    if not is_reel_media:
-        return None
-
-    resp = requests.get(media_json["media"])
-
-    if not (200 <= response.status_code < 300):
-        return None
-
-    video_path = os.path.abspath(
-        os.path.join(
-            __file__,
-            "..",
-            "videos",
-            f"vid_{int(datetime.datetime.utcnow().timestamp())}.mp4",
-        )
+    instagram.download_post(
+        instaloader.Post.from_shortcode(instagram.context, reel_id), dl_dir_local
     )
 
-    with open(video_path, "wb") as f:
-        f.write(resp.content)
+    files = os.listdir(dl_dir)
+    video_file = [x for x in files if x.endswith(".mp4")]
+    if not video_file:
+        return None
 
-    return video_path
+    fp_full = os.path.join(dl_dir, video_file[0])
+    return fp_full
 
 
 def abs_dev(a, b):

@@ -3,3 +3,4 @@ bot_secrets.py
 *.session
 tst*.py
 .gitsecret/keys/random_seed
+il.sess
