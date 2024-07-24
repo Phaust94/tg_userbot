@@ -62,17 +62,21 @@ async def reply_message(_, msg: Message):
         return None
     elif msg.chat.id in USER_TO_ACCOUNT_ID:
         return await handle_balance(msg)
+    # elif (
+    #     not hasattr(msg, "sticker")
+    #     or msg.sticker is None
+    #     or msg.sticker.file_unique_id not in STICKER_TO_WORD
+    # ):
+    #     reply_txt = "Привіт!"
+    #     await msg.reply_text(reply_txt)
+    #     await msg.reply_sticker(HELLO_ID)
+    #     await msg.reply_text("Шукаєте дівчину? Шукайте, успіхів!")
+    #     await msg.reply_audio(SONG_ID)
     elif (
-        not hasattr(msg, "sticker")
-        or msg.sticker is None
-        or msg.sticker.file_unique_id not in STICKER_TO_WORD
+            hasattr(msg, "sticker")
+            and msg.sticker is not None
+            and msg.sticker.file_unique_id in STICKER_TO_WORD
     ):
-        reply_txt = "Привіт!"
-        await msg.reply_text(reply_txt)
-        await msg.reply_sticker(HELLO_ID)
-        await msg.reply_text("Шукаєте дівчину? Шукайте, успіхів!")
-        await msg.reply_audio(SONG_ID)
-    else:
         await msg.reply_text(STICKER_TO_WORD[msg.sticker.file_unique_id])
     return None
 
